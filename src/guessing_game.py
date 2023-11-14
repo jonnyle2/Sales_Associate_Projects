@@ -44,6 +44,9 @@ for guess_count in range(1, 11):
         # Validate user input.
         try:
             number_guessed = int(input("Take a guess...\n"))
+            if number_guessed in guess_history:
+                print("You already guessed this number.")
+                continue
             valid_guess = True
         except ValueError:
             # The user didn't give us a number!
