@@ -2,6 +2,7 @@
 import time
 import random
 from rpi_ws281x import PixelStrip, Color
+from Adafruit_LED_Backpack import SevenSegment
 
 LED_COUNT = 64        # Number of LED pixels.
 LED_PIN = 12          # GPIO pin connected to the pixels
@@ -28,7 +29,14 @@ def colorAll(strip, color):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
         strip.show()
-        
+
+
+segment = SevenSegment.SevenSegment(address=0x70)
+# Initialize the display. Must be called once before using the display.
+segment.begin()
+segment.set_digit(3, 0)
+segment.set_digit(2, 1)
+segment.write_display()
 # Begin the guessing loop with 10 tries.
 for guess_count in range(1, 11):
     # Prompt the user for a number.
@@ -64,6 +72,9 @@ for guess_count in range(1, 11):
     else:
         # They guessed the number correctly!
         break
+    segment.clear()
+    segment.set_digit(3, 10 - guess_count)
+    segment.write_display()
 
 # Check if a correct guess was made.
 if number_guessed == my_number:
@@ -72,7 +83,11 @@ if number_guessed == my_number:
     print("Your guesses were: " + " ".join(str(i) for i in guess_history))
     time.sleep(3)
     colorAll(strip, Color(0, 0, 0))
+    segment.clear()
+    segment.write_display()
 else:
     print("Sorry! You didn't guess my number. The number I am thinking of is " + str(my_number) + ".")
     time.sleep(3)
     colorAll(strip, Color(0, 0, 0))
+    segment.clear()
+    segment.write_display()
