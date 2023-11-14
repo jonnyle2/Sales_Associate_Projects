@@ -17,8 +17,7 @@ name = input("Hello! What is your name?\n")
 print("Hello there " + name + "! I am thinking of a number between 1 and 100.")
 
 # Prepare the game's variables.
-#my_number = random.randint(1, 100)
-my_number = 10
+my_number = random.randint(1, 100)
 guess_history = []
 
 strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
